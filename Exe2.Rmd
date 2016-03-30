@@ -1,0 +1,85 @@
+---
+title: "Ex2"
+authors: "Ronit Yoari & Orel Swisa"
+date: "March 27, 2016"
+output: html_document
+
+
+
+Road Safety Data: The first film of the data, a data file found on the Web in a structured format of CSV.
+
+reference: https://data.gov.uk/dataset/road-accidents-safety-data
+---
+```{r include= TRUE, echo=FALSE}
+
+setwd("C:/Users/Rona/Google Drive/DataScientist/Ass2")
+
+library("downloader")
+# Download a csv file from the Internet:
+
+#       fileURL <- "https://dl.dropboxusercontent.com/u/73991112/DfTRoadSafety_Accidents_2014.csv"
+folder<-".\\data\\DfTRoadSafety_Accidents_2014.csv"
+
+#       download.file(fileURL, destfile = folder)
+
+# Always record the date
+#       dateDownloaded <- date()
+
+# Read from local drive
+# Reading the first records :
+accidentsData <- read.csv(folder, sep = ",",header = T, row.names=NULL)
+
+head(accidentsData)
+```
+
+
+
+summary:
+```{r echo=FALSE}
+summary(accidentsData)
+```
+
+Data Description :
+
+This file provide detailed road safety data about the circumstances of personal injury road accidents from 2014, the types (including Make and Model) of vehicles involved and the consequential casualties. The statistics relate only to personal injury accidents on public roads that are reported to the police, and subsequently recorded, using the STATS19 accident reporting form.
+Also includes: Results of breath-test screening data from recently introduced digital breath testing devices, as provided by Police Authorities in England and Wales
+Results of blood alcohol levels (milligrams / 100 millilitres of blood) provided by matching coroners' data (provided by Coroners in England and Wales and by Procurators Fiscal in Scotland) with fatality data from the STATS19 police data of road accidents in Great Britain. For cases when the Blood Alcohol Levels for a fatality are "unknown" are a consequence of an unsuccessful match between the two data sets.
+
+
+Analysis of data by various criteria :
+
+mean of Number Vehicles that were in thr accident:
+```{r echo=FALSE}
+
+Number_of_Vehicles<-accidentsData[,8]
+mean(Number_of_Vehicles)
+```
+
+
+united kingdom map, car accidents:
+```{r echo=FALSE, warning=FALSE}
+library(ggmap)
+library(ggplot2)
+folder<-".\\data\\DfTRoadSafety_Accidents_2014.csv"
+accidentsData <- read.csv(folder, sep = ",",header = T, row.names=NULL)
+
+
+Longitude<-accidentsData[,4]
+
+Latitude<-accidentsData[,5]
+
+# qmap(location = "united kingdom", zoom=9 )  
+
+#plot the  hybrid Google Maps basemap
+map <- qmap('united kingdom', zoom = 8, maptype = 'hybrid')
+#plot the crime points on top
+map + geom_point(data = accidentsData, aes(x = Longitude, y = Latitude), color="red", size=3, alpha=0.5)
+
+```
+map conclusions:
+
+we can see in the map that most of accident took place in...
+
+  
+
+
